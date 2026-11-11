@@ -7,8 +7,8 @@ Chooses the protein closest to each group’s median length and exports PDF, SVG
 
 | Option | Input / example | Description |
 | :--- | :--- | :--- |
-| `--run` | `results_20261110_195331` | Existing FlaGs3 results folder. |
-| `--out` | `papi28_architectures_8colours` | Output folder, outside the FlaGs3 results folder. |
+| `--run` | `results_20261110_195331` |PFAM results folder. |
+| `--out` | `papi28_architectures_8colours` | Output folder|
 | `--title` | `"PAPI28 domain architectures"` | Figure title in quotes. |
 | `--palette` | `'#F25532,#4D5793,#758BAE'` | Comma-separated colours in quotes. Supply enough colours for every distinct Pfam type to avoid patterns. |
 | `--no-tm` | No value | Omit transmembrane-helix overlays. |
