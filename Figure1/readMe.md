@@ -2,6 +2,8 @@
 
 Plots Pfam architectures, showing one representative protein and the count for each architecture.
 Chooses the protein closest to each group’s median length and exports PDF, SVG, PNG and supporting tables.
+
+
 Parameter	What to enter
 --run	folder with pfam table.
 --out	Where to save figures and tables. 
