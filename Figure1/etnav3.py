@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-"""Fetch RefSeq IPG mappings and source metadata for a BLAST hit table.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -200,7 +197,6 @@ def parse_ipg_xml(xml_text: str, requested_protein: str) -> list[dict[str, str]]
             walk(child, protein)
 
     walk(root, current_protein)
-    # Be tolerant of older IPG XML in which source is on a report/record ancestor.
     if not mappings:
         for element in root.iter():
             nucleotide = attr(element, "nucleotide_acc", "nucleotide_accession", "nucaccver")
