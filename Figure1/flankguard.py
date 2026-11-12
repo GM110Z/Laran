@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-"""FlankGuard: cached neighbourhood analysis with harmonised system reporting.
-
-Existing contexts and successful scanner runs are reused automatically.
-Reports are always rebuilt from raw DefenseFinder/PADLOC results.
-
---replot-only prohibits downloads and scanner execution.
---retry-failed retries previously failed IPG/context retrievals.
-
-Only Python's standard library is required for this script.
-DefenseFinder and PADLOC are external scanner dependencies.
-"""
 
 from __future__ import annotations
 
@@ -743,8 +732,6 @@ def scanner_complete(context, tool):
     if any(directory.rglob("*_padloc.csv")):
         return True
 
-    # PADLOC can complete successfully without creating a CSV when no
-    # systems are found. That is not a failed or incomplete scan.
     log = directory / "flankguard.log"
     return (
         log.is_file()
@@ -818,7 +805,7 @@ def run_scanner(args, context, tool):
             "tool": tool,
         }) + "\n",
     )
-    # Replace this scanner's old generated outputs only after success.
+
     if destination.exists():
         shutil.rmtree(destination)
     staging.rename(destination)
@@ -959,8 +946,6 @@ def scan_contexts(args, contexts):
 def canonical_system(name):
     value = key(name)
 
-    # The methyltransferase/nuclease prefixes are model detail, not
-    # separate top-level RM types. Match IIG before II or I.
     match = re.search(
         r"(?:^|-)rm-(?:type-)?(iig|iii|iv|ii|i)(?=-|$)", value
     )
@@ -1114,12 +1099,10 @@ def merge_loci(calls):
         ]
         for left in range(len(rows)):
             for right in range(left + 1, len(rows)):
-                # Same canonical type alone is insufficient.
-                # Require an actual shared gene, not just overlapping spans.
+                
                 if not feature_sets[left] & feature_sets[right]:
                     continue
-                # Separate calls from one scanner remain separate unless
-                # they contain precisely the same reported gene set.
+                
                 if (
                     rows[left]["program"] == rows[right]["program"]
                     and feature_sets[left] != feature_sets[right]
